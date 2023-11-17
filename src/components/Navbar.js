@@ -1,15 +1,17 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { NavLink } from 'react-router-dom';
-import logo from '../images/images1.png';
+import logo from '../images/logo1234.jpg';
+
 
 const Navbar = () => {
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
           <NavLink className="navbar-brand" to="/">
-            <img src={logo} ali="logo" height={50} width={120} />
+            <p height={50} width={120}>Sentiment Sync</p>
           </NavLink>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
@@ -20,7 +22,7 @@ const Navbar = () => {
                 <NavLink className="nav-link active" aria-current="page" to="/">Home</NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/about">Analysis</NavLink>
+                <NavLink className="nav-link" to="/analysis">My Analysis</NavLink>
               </li>
               {/* <li className="nav-item">
                 <NavLink className="nav-link" to="/contact">Contact</NavLink>
