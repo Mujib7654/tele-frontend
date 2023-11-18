@@ -1,4 +1,4 @@
-import React, {useReducer, createContext} from 'react';
+import React, {useReducer, createContext, useState} from 'react';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
@@ -31,7 +31,7 @@ const Routing = () => {
 }
 
 const App = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useState(initialState);
   return (
     <>
       <UserContext.Provider value={{state, dispatch}}>
