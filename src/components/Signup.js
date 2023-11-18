@@ -8,7 +8,7 @@ const Signup = () => {
 
   // setting initial state
   const [user, setUser] = useState({
-    name: "", email:"", phone:"", work:"", password:"", cpassword:""
+    name: "", email:"", phone:"", facebook:"", instagram:"", twitter:"", linkedin:"", password:"", cpassword:""
   });
 
   let name, value;
@@ -22,7 +22,7 @@ const Signup = () => {
 
   const PostData = async(e) => {
     e.preventDefault();
-    const {name, email, phone, work, password, cpassword} = user;
+    const {name, email, phone, facebook, instagram, twitter, linkedin, password, cpassword} = user;
 
     const res = await fetch('http://localhost:5000/register', {
       method : 'POST',
@@ -30,7 +30,7 @@ const Signup = () => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        name, email, phone, work, password, cpassword
+        name, email, phone, facebook, instagram, twitter, linkedin, password, cpassword
       })
     });
 
@@ -88,31 +88,31 @@ const Signup = () => {
                 </div>
 
                 <div className='form-group'>
-                  <label htmlFor='work'>
+                  <label htmlFor='facebook'>
                     <i className='zmdi zmdi-facebook material-icons-name'></i>
                   </label>
-                  <input type='text' name='work' id='work' autoComplete='off'  value={user.work} onChange={handleInputs}  placeholder='Facebook'/>
+                  <input type='text' name='facebook' id='facebook' autoComplete='off'  value={user.facebook} onChange={handleInputs}  placeholder='Facebook'/>
                 </div>
 
                 <div className='form-group'>
-                  <label htmlFor='work'>
+                  <label htmlFor='instagram'>
                     <i className='zmdi zmdi-instagram material-icons-name'></i>
                   </label>
-                  <input type='text' name='work' id='work' autoComplete='off'  value={user.work} onChange={handleInputs}  placeholder='Instagram'/>
+                  <input type='text' name='instagram' id='instagram' autoComplete='off'  value={user.instagram} onChange={handleInputs}  placeholder='Instagram'/>
                 </div>
 
                 <div className='form-group'>
-                  <label htmlFor='work'>
+                  <label htmlFor='twitter'>
                     <i className='zmdi zmdi-twitter'></i>
                   </label>
-                  <input type='text' name='work' id='work' autoComplete='off'  value={user.work} onChange={handleInputs}  placeholder='Twitter'/>
+                  <input type='text' name='twitter' id='twitter' autoComplete='off'  value={user.twitter} onChange={handleInputs}  placeholder='Twitter'/>
                 </div>
 
                 <div className='form-group'>
-                  <label htmlFor='work'>
+                  <label htmlFor='linkedin'>
                     <i className='zmdi zmdi-linkedin'></i>
                   </label>
-                  <input type='text' name='work' id='work' autoComplete='off'  value={user.work} onChange={handleInputs}  placeholder='Linkedln'/>
+                  <input type='text' name='linkedin' id='linkedin' autoComplete='off'  value={user.linkedin} onChange={handleInputs}  placeholder='Linkedln'/>
                 </div>
 
                 <div className='form-group'>

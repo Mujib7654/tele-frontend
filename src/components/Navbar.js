@@ -1,10 +1,48 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { NavLink } from 'react-router-dom';
-import logo from '../images/logo1234.jpg';
+import {UserContext} from "../App";
+
 
 
 const Navbar = () => {
+  const state  = useContext(UserContext);
+  console.log(`the navbar user  ${JSON.stringify(state)} `);
+
+  const RenderList = () => {
+    if(state && state.state){
+      return (
+        <>
+              <li className="nav-item">
+                <NavLink className="nav-link active" aria-current="page" to="/">Home</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/analysis">My Analysis</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/logout">Logout</NavLink>
+              </li>
+        </>
+      )
+    }else{
+      return (
+        <>
+              <li className="nav-item">
+                <NavLink className="nav-link active" aria-current="page" to="/">Home</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/analysis">My Analysis</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/login">Login</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/signup">Signup</NavLink>
+              </li>
+        </>
+      )
+    }
+  }
 
   return (
     <>
@@ -18,22 +56,7 @@ const Navbar = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 ml-auto">
-              <li className="nav-item">
-                <NavLink className="nav-link active" aria-current="page" to="/">Home</NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/analysis">My Analysis</NavLink>
-              </li>
-              {/* <li className="nav-item">
-                <NavLink className="nav-link" to="/contact">Contact</NavLink>
-              </li> */}
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/login">Login</NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/signup">Signup</NavLink>
-              </li>
-              
+              <RenderList />
             </ul>
           </div>
         </div>

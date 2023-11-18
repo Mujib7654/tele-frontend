@@ -6,39 +6,33 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const[email, setEmail] = useState('');
+  const[password, setPassword] = useState('');
 
   const loginUser = async(e) => {
     e.preventDefault();
 
     const res = await fetch('http://localhost:5000/signin', {
-      method : 'POST',
-      headers: {
+      method: "POST",
+      headers:{
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         email,
         password
-      })
+      }),
     })
 
-    // const data = res.json();
-    // if(data.status === 400 || !data){
-    //   window.alert("Invalid Credentials");
-    // }
-    // else{
-    //   window.alert("Login Successfully");
-    //   navigate('/');
-    // }
-
-    
     if (res.status === 200) {
       window.alert("Login Successfully");
+      const data = await res.json();
+      localStorage.setItem("jwt", data.token);
+      console.log("Login Successfully");
       navigate('/');
-    } else{
+    } else {
       const data = await res.json();
       window.alert(data.error);
+      console.log(data.error); 
     }
   };
 

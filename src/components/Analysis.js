@@ -1,60 +1,58 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import {useNavigate} from 'react-router-dom';
 import '../App.css';
 
 const About = () => {
-  // const navigate = useNavigate();
-  // const callAboutPage = async() => {
-  //   try {
-  //     const res = fetch('http://localhost:5000/about', {
-  //       method : "GET",
-  //       headers : {
-  //         Accept : 'application/json',
-  //         "Content-Type" : 'application/json'
-  //       },
-  //       credentials : 'include'
-  //     });
-  //     const data = await res.json();
-  //     if(!res.status === 200){
-  //       const error = new error(res.error);
-  //       throw error;
+  const navigate = useNavigate();
+  const [userData, setUserData] = useState([]);
+  const callAboutPage = async() => {
+    try {
+      const res = await fetch('http://localhost:5000/analysis', {
+        method : 'GET',
+        headers : {
+          Accept : 'application/json',
+          'Content-Type' : 'application/json',
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+        credentials : 'include'
+      });
 
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     navigate('/login')
-  //   }
-  // }
+      const data = await res.json();
+      console.log(data);
+      setUserData(data);
 
-  // useEffect(() => {
-  //   callAboutPage();
-  // }, [])
+      if(res.status !== 200){
+        const error = new Error(res.error);
+        throw error;
+      };
+    } catch (error) {
+      console.log(`${error}`);
+      navigate('/login')
+    };
+  };
+
+  useEffect(() => {
+    callAboutPage();
+  }, []);
   return (
     <Wrapper>
       <div className='container emp-profile'>
         <form method='GET'>
           <div className='row'>
             <div className='col-md-4'>
-              {/* <div className='profile-img'>
-                <img src={profile} alt='profile image'/>
-              </div> */}
               <div className='box'>
                 <h2>Base Score</h2>
-                <h3>10</h3>
+                <h3>{userData.baseScore}</h3>
               </div>
             </div>
             <div className='col-md-4'>
               <div className='profile-head'>
-                <p>Hello [Comapny Name] Team</p>
+                <p>Hello {userData.name} Team</p>
                  <p> Let's Analyse your Social Profile </p>
                  <p> Here's the Result </p>
                   <p>Base Score: Represents the analysis based on All time Customer Reactions.</p>
-                  <p>  Current Score: Represents the recent analysis of past one month Customer Reactions.</p>
-                {/* <h6>Web Developer</h6>
-                <p className='profile-rating mt-3 mb-5'>
-                  RANKING: <span>1/10</span>
-                </p> */}
+                  <p>Current Score: Represents the recent analysis of past one month Customer Reactions.</p>
 
                 {/* tabs */}
                 <ul className='nav nav-tabs' role='tablist'>
@@ -64,20 +62,14 @@ const About = () => {
                     </a>
                   </li>
 
-                  {/* <li className='nav-item'>
-                    <a className='nav-link' id='profile-tab' data-toggle='tab' href='#profile' role='tab'>
-                      Timeline
-                    </a>
-                  </li> */}
                 </ul>
               </div>
             </div>
 
             <div className='col-md-4'>
-              {/* <input type='submit' value='Edit Profile' name='btnAddMore' className='profile-edit-btn' /> */}
               <div className='box1'>
                 <h2>Current Score</h2>
-                <h3>10</h3>
+                <h3>{userData.currentScore}</h3>
               </div>
             </div>
           </div>
@@ -87,10 +79,10 @@ const About = () => {
             <div className='col-md-4'>
               <div className='profile-work'>
                 <p>YOUR SOCIALS</p>
-                <a href='https://www.linkedin.com/in/md-sajjad-ali-a4148b241/' target='_blank' rel="noopener noreferrer"><i class="zmdi zmdi-linkedin material-icons-name"></i></a> <br/>
-                <a href='https://github.com/sajjad83255' target='_blank' rel="noopener noreferrer"><i class="zmdi zmdi-twitter material-icons-name"></i></a> <br/>
-                <a href='https://github.com/sajjad83255' target='_blank' rel="noopener noreferrer"><i class="zmdi zmdi-instagram material-icons-name"></i></a> <br/>
-                <a href='https://github.com/sajjad83255' target='_blank' rel="noopener noreferrer"><i class="zmdi zmdi-facebook material-icons-name"></i></a> <br/>
+                <a href={userData.linkedin} target='_blank' rel="noopener noreferrer"><i class="zmdi zmdi-linkedin material-icons-name"></i></a> <br/>
+                <a href={userData.twitter} target='_blank' rel="noopener noreferrer"><i class="zmdi zmdi-twitter material-icons-name"></i></a> <br/>
+                <a href={userData.instagram} target='_blank' rel="noopener noreferrer"><i class="zmdi zmdi-instagram material-icons-name"></i></a> <br/>
+                <a href={userData.facebook} target='_blank' rel="noopener noreferrer"><i class="zmdi zmdi-facebook material-icons-name"></i></a> <br/>
               </div>
             </div>
 
@@ -103,7 +95,7 @@ const About = () => {
                       <p>USER ID</p>
                     </div>
                     <div className='col-md-6'>
-                      <p>542809816471275401</p>
+                      <p>{userData._id}</p>
                     </div>
                   </div>
 
@@ -112,7 +104,7 @@ const About = () => {
                       <p>COMPANY NAME</p>
                     </div>
                     <div className='col-md-6'>
-                      <p>Md Sajjad Ali</p>
+                      <p>{userData.name}</p>
                     </div>
                   </div>
 
@@ -121,7 +113,7 @@ const About = () => {
                       <p>EMAIL</p>
                     </div>
                     <div className='col-md-6'>
-                      <p>mdsajjadali83255@gmail.com</p>
+                      <p>{userData.email}</p>
                     </div>
                   </div>
 
@@ -130,18 +122,9 @@ const About = () => {
                       <p>CONTACT</p>
                     </div>
                     <div className='col-md-6'>
-                      <p>9764147427</p>
+                      <p>{userData.phone}</p>
                     </div>
                   </div>
-
-                  {/* <div className='row mt-3'>
-                    <div className='col-md-6'>
-                      <p>PROFESSION</p>
-                    </div>
-                    <div className='col-md-6'>
-                      <p>SOFTWARE ENGINEER</p>
-                    </div>
-                  </div> */}
                 </div>
               
               </div>
